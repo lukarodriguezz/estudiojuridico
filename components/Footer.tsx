@@ -29,4 +29,25 @@ export default function Footer() {
               <a 
                 key={link.name} 
                 href={link.href} 
-                className="text-[10px] font-label uppercase tracking-[0.2em] text-primary-fixed-dim hover:text-tertiary-
+                className="text-[10px] font-label uppercase tracking-[0.2em] text-primary-fixed-dim hover:text-tertiary-fixed transition-colors duration-300"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+
+        </div>
+
+        {/* Línea decorativa final muy sutil */}
+        <div className="mt-12 w-full h-px bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
+        
+        <div className="mt-8 text-center">
+          <p className="text-[9px] font-label uppercase tracking-[0.4em] text-white/10">
+            Excelencia Jurídica en la Patagonia
+          </p>
+        </div>
+
+      </div>
+    </footer>
+  );
+}
