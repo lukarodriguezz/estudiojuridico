@@ -14,13 +14,13 @@ export default function Contact() {
             <p className="font-body text-secondary mb-12">Un asociado se pondrá en contacto con usted a la brevedad.</p>
             
             <form className="space-y-10">
-              <div className="relative border-b border-outline/50 focus-within:border-primary transition-colors py-2">
-                <label className="block font-label text-[10px] uppercase tracking-widest text-secondary mb-1">Nombre Completo</label>
-                <input 
-                  type="text" 
-                  placeholder="Juan Pérez"
-                  className="w-full bg-transparent border-none p-0 text-primary placeholder:text-outline/30 focus:ring-0 font-body"
-                />
+              <div className="relative border-b border-outline/50 focus-within:border-primary transition-colors py-4"> 
+                  <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-secondary mb-2">Nombre Completo</label>
+                  <input 
+                    type="text" 
+                    className="w-full bg-transparent border-none p-0 text-primary focus:ring-0 font-body text-base" 
+                    placeholder="Ej: Juan Pérez"
+                 />
               </div>
 
               <div className="relative border-b border-outline/50 focus-within:border-primary transition-colors py-2">

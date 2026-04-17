@@ -25,16 +25,16 @@ export default function Hero() {
           <span className="font-label text-tertiary-fixed text-sm uppercase tracking-[0.2em] font-bold mb-6 block">
             Neuquén, Patagonia
           </span>
-          <h1 className="font-headline text-5xl md:text-7xl text-on-primary leading-[1.1] tracking-tight mb-8">
-            Asesores de Confianza, <br/> 
-            <span className="italic"> Soluciones Inteligentes.</span>
-          </h1>
+          <h1 className="font-headline text-4xl md:text-7xl text-on-primary leading-tight tracking-tight mb-6">
+              ASESORES DE <br className="md:hidden"/> CONFIANZA. <br/>
+               <span className="italic text-tertiary-fixed">SOLUCIONES INTELIGENTES.</span>
+            </h1>
           <p className="font-body text-xl text-primary-fixed-dim leading-relaxed mb-10 max-w-xl">
 Brindamos asesoramiento legal integral y soluciones estratégicas de alta complejidad, con especialización técnica en el sector de hidrocarburos y derecho empresarial.          </p>
           
           <div className="flex flex-wrap gap-4">
-            <button className="bg-tertiary-fixed text-on-tertiary-fixed px-8 py-4 rounded-sm font-label uppercase tracking-widest text-sm font-bold hover:bg-tertiary-fixed-dim transition-all hover:-translate-y-1 shadow-lg">
-              Agendar Consulta
+            <button className="w-full md:w-auto bg-tertiary-fixed text-on-tertiary-fixed px-8 py-4 rounded-sm font-label uppercase tracking-widest text-xs font-bold shadow-lg">
+              Iniciar Consulta
             </button>
           </div>
         </motion.div>
