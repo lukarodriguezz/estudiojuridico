@@ -1,11 +1,13 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: 'export', // Indica que queremos archivos estáticos (HTML/CSS/JS)
-  images: {
-    unoptimized: true, // GitHub Pages no soporta la optimización de imágenes de Next.js por defecto
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  output: 'export',
+  images: { 
+    unoptimized: true 
   },
-  // Descomenta la siguiente línea si tu repo NO es el principal (ej: /neuquen-legal/)
-  // basePath: '/neuquen-legal', 
+  // ESTA ES LA LÍNEA MÁGICA QUE ARREGLA LOS ESTILOS ROTOS:
+  basePath: '/estudiojuridico',
+  assetPrefix: '/estudiojuridico/',
 };
 
 export default nextConfig;
