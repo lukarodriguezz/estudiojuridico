@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* --- Tipografías --- */
+  --font-headline: var(--font-newsreader), serif;
+  --font-body: var(--font-manrope), sans-serif;
+  --font-label: var(--font-manrope), sans-serif;
+
+  /* --- Paleta de Colores Neuquén Legal --- */
+  --color-surface: #f9f9f9;
+  --color-on-surface: #1a1c1c;
+  --color-primary: #0e1c2b;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #233141;
+  --color-primary-fixed-dim: #bac8dc;
+  --color-secondary: #50606f;
+  --color-tertiary: #251800;
+  --color-tertiary-container: #402c00;
+  --color-tertiary-fixed: #ffdea5;
+  --color-on-tertiary-fixed: #261900;
+  --color-surface-variant: #e2e2e2;
+  --color-outline: #767683;
+  --color-outline-variant: #c6c5d4;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f3f3f3;
+  --color-surface-container-highest: #e2e2e2;
+
+  /* --- Radios de borde (Bespoke UI) --- */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+}
+
+/* Configuraciones base para mantener la accesibilidad y el fondo limpio */
+@layer base {
+  *, ::before, ::after {
+    border-color: var(--color-outline-variant);
+  }
+  
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+    font-family: var(--font-body);
+  }
+}
