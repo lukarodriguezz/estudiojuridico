@@ -57,7 +57,7 @@ export default function Footer() {
             Patagonia Argentina
           </p>
           <p className="text-[9px] font-label uppercase tracking-[0.4em] text-white/10">
-            Design by Studio
+            Design by L 
           </p>
         </div>
 
