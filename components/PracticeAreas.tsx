@@ -5,7 +5,7 @@ import { Gavel, Building2, Briefcase, Users2, ArrowRight, Flame } from 'lucide-r
 const services = [
   {
     title: "Derecho Civil",
-    description: "Representación integral en litigios civiles, contratos y reclamaciones de responsabilidad civil,",
+    description: "Representación integral en litigios civiles, contratos y reclamaciones de responsabilidad civil.",
     icon: Gavel,
   },
   {
@@ -21,7 +21,7 @@ const services = [
   },
   {
     title: "Derecho Familiar",
-    description: "Gestión profesional y reservada de asuntos familiares, planificación sucesoria y patrimonial.",
+    description: "Gestión profesional y reservada de asuntos familiares, divorcios, planificación sucesoria y patrimonial.",
     icon: Users2,
   },
 ];
