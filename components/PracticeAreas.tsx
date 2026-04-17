@@ -70,7 +70,7 @@ export default function PracticeAreas() {
 
               {/* Link sutil decorativo */}
               <div className="mt-auto flex items-center text-[10px] font-label uppercase tracking-[0.2em] text-primary/40 group-hover:text-tertiary font-bold transition-colors">
-                Ver más <ArrowRight size={14} className="ml-2 transform group-hover:translate-x-1 transition-transform" />
+                Consultas 
               </div>
 
               {/* Línea decorativa inferior (Desktop) */}
