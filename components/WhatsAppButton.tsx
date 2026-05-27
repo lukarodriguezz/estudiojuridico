@@ -2,9 +2,7 @@
 import { motion } from 'framer-motion';
 
 export default function WhatsAppButton() {
-  // CONFIGURACIÓN: Reemplaza con el número real del estudio. 
-  // Formato: Código de país (54) + Código de área (ej: 9299) + Número. Sin el signo + ni espacios.
-  const phoneNumber = "5492996553310"; 
+  const phoneNumber = process.env.NEXT_PUBLIC_WHATSAPP_PHONE ?? "5492996553310";
   const message = "Hola, me comunico desde la web. Me gustaría recibir asesoramiento.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 

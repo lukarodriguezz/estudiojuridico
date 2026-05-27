@@ -7,14 +7,22 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Detectar scroll para cambiar el color del Navbar
+  const SCROLL_THRESHOLD = 50;
+
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > SCROLL_THRESHOLD);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [isMobileMenuOpen]);
 
   const navLinks = [
     { name: 'Especialidades', href: '#expertise' },
@@ -64,12 +72,14 @@ export default function Navbar() {
           </nav>
 
           {/* Botón Menú Mobile */}
-          <button 
+          <button
             className={`md:hidden p-2 transition-colors duration-500 ${
               isScrolled ? 'text-primary' : 'text-on-primary'
             }`}
             onClick={() => setIsMobileMenuOpen(true)}
             aria-label="Abrir menú"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             <Menu size={28} />
           </button>
@@ -80,6 +90,10 @@ export default function Navbar() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menú de navegación"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}

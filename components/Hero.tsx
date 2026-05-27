@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 export default function Hero() {
@@ -6,10 +7,13 @@ export default function Hero() {
     <section className="relative min-h-[100svh] flex items-center overflow-hidden bg-primary pt-20 md:pt-0">
       {/* Imagen de fondo con filtro arquitectónico/legal */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop" 
-          alt="Neuquén Legal Office" 
-          className="w-full h-full object-cover opacity-30 grayscale"
+        <Image
+          src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop"
+          alt="Interior de oficina profesional con vista panorámica de la ciudad de Neuquén"
+          fill
+          className="object-cover opacity-30 grayscale"
+          priority
+          sizes="100vw"
         />
         {/* El degradado que permite leer el texto perfectamente */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/95 to-primary/40"></div>
