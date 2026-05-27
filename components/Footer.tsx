@@ -39,9 +39,10 @@ export default function Footer() {
             </div>
             
             {/* Redes o Social (Opcional - LinkedIn es clave en derecho) */}
-            <a 
-              href="#" 
-              target="_blank" 
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-[10px] font-label uppercase tracking-[0.2em] text-tertiary-fixed/80 hover:text-tertiary-fixed flex items-center gap-2 transition-colors"
             >
               <span className="w-4 h-px bg-tertiary-fixed/30"></span>

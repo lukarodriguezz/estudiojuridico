@@ -14,8 +14,22 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Neuquén Legal | Expert Legal Counsel",
-  description: "Firma de abogados líder en la Patagonia Argentina.",
+  title: "Neuquén Legal | Asesoramiento Jurídico en Patagonia",
+  description: "Estudio jurídico especializado en hidrocarburos, derecho corporativo y laboral. Soluciones legales estratégicas en Neuquén, Patagonia Argentina.",
+  keywords: ["abogados Neuquén", "estudio jurídico Patagonia", "derecho corporativo", "hidrocarburos", "asesoramiento legal"],
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: "website",
+    title: "Neuquén Legal | Asesoramiento Jurídico",
+    description: "Estudio jurídico especializado en hidrocarburos, derecho corporativo y laboral en Neuquén.",
+    siteName: "Neuquén Legal",
+    locale: "es_AR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Neuquén Legal | Asesoramiento Jurídico",
+    description: "Estudio jurídico especializado en hidrocarburos, derecho corporativo y laboral en Neuquén.",
+  },
 };
 
 export default function RootLayout({

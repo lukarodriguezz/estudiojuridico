@@ -1,13 +1,65 @@
 'use client';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail } from 'lucide-react';
 
+type FormState = 'idle' | 'submitting' | 'success' | 'error';
+
+const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID;
+
 export default function Contact() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [formState, setFormState] = useState<FormState>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      setErrorMsg('Por favor complete todos los campos.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setErrorMsg('Ingrese un correo electrónico válido.');
+      return;
+    }
+    if (!FORMSPREE_ID) {
+      setErrorMsg('El formulario no está configurado. Contacte al administrador.');
+      return;
+    }
+
+    setErrorMsg('');
+    setFormState('submitting');
+
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (res.ok) {
+        setFormState('success');
+        setName('');
+        setEmail('');
+        setMessage('');
+      } else {
+        setFormState('error');
+        setErrorMsg('Error al enviar el mensaje. Intente nuevamente.');
+      }
+    } catch {
+      setFormState('error');
+      setErrorMsg('Error de red. Intente nuevamente.');
+    }
+  };
+
   return (
     <section id="contact" className="py-24 md:py-32 bg-surface-container-low">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="bg-surface-container-lowest shadow-2xl rounded-sm overflow-hidden flex flex-col lg:flex-row border border-outline-variant/20">
-          
+
           {/* Columna Izquierda: Formulario */}
           <div className="w-full lg:w-1/2 p-8 md:p-12 lg:p-20">
             <h2 className="font-headline text-3xl md:text-4xl text-primary mb-3 tracking-tight italic">
@@ -16,42 +68,88 @@ export default function Contact() {
             <p className="font-body text-secondary mb-10 text-sm md:text-base leading-relaxed">
               Un socio del estudio analizará su consulta de manera confidencial y se pondrá en contacto a la mayor brevedad.
             </p>
-            
-            <form className="space-y-8 md:space-y-10">
-              <div className="relative border-b border-outline/50 focus-within:border-primary transition-colors py-3 md:py-2">
-                <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-secondary mb-1">Nombre o Razón Social</label>
-                <input 
-                  type="text" 
-                  placeholder="Ej: Pérez & Cía."
-                  className="w-full bg-transparent border-none p-0 text-primary placeholder:text-outline/30 focus:ring-0 font-body text-base"
-                />
-              </div>
 
-              <div className="relative border-b border-outline/50 focus-within:border-primary transition-colors py-3 md:py-2">
-                <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-secondary mb-1">Correo Electrónico</label>
-                <input 
-                  type="email" 
-                  placeholder="contacto@empresa.com"
-                  className="w-full bg-transparent border-none p-0 text-primary placeholder:text-outline/30 focus:ring-0 font-body text-base"
-                />
-              </div>
-
-              <div className="relative border-b border-outline/50 focus-within:border-primary transition-colors py-3 md:py-2">
-                <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-secondary mb-1">Motivo de la Consulta</label>
-                <textarea 
-                  rows={3}
-                  placeholder="¿En qué podemos asesorarlo?"
-                  className="w-full bg-transparent border-none p-0 text-primary placeholder:text-outline/30 focus:ring-0 font-body text-base resize-none"
-                />
-              </div>
-
-              <button 
-                type="button"
-                className="w-full bg-primary text-on-primary py-5 rounded-sm font-label uppercase tracking-[0.2em] text-xs font-bold hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl active:scale-[0.98] mt-4"
+            {formState === 'success' ? (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="py-12 text-center"
               >
-                Enviar Mensaje
-              </button>
-            </form>
+                <p className="font-headline text-2xl text-primary italic mb-3">Mensaje enviado.</p>
+                <p className="font-body text-secondary text-sm">Nos pondremos en contacto a la brevedad.</p>
+                <button
+                  onClick={() => setFormState('idle')}
+                  className="mt-8 font-label text-[10px] uppercase tracking-[0.2em] text-secondary hover:text-primary transition-colors"
+                >
+                  Enviar otro mensaje
+                </button>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} noValidate className="space-y-8 md:space-y-10">
+                <div className="relative border-b border-outline/50 focus-within:border-primary transition-colors py-3 md:py-2">
+                  <label htmlFor="contact-name" className="block font-label text-[10px] uppercase tracking-[0.2em] text-secondary mb-1">
+                    Nombre o Razón Social
+                  </label>
+                  <input
+                    id="contact-name"
+                    name="name"
+                    type="text"
+                    required
+                    maxLength={120}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Ej: Pérez & Cía."
+                    className="w-full bg-transparent border-none p-0 text-primary placeholder:text-outline/30 focus:ring-0 font-body text-base"
+                  />
+                </div>
+
+                <div className="relative border-b border-outline/50 focus-within:border-primary transition-colors py-3 md:py-2">
+                  <label htmlFor="contact-email" className="block font-label text-[10px] uppercase tracking-[0.2em] text-secondary mb-1">
+                    Correo Electrónico
+                  </label>
+                  <input
+                    id="contact-email"
+                    name="email"
+                    type="email"
+                    required
+                    maxLength={254}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="contacto@empresa.com"
+                    className="w-full bg-transparent border-none p-0 text-primary placeholder:text-outline/30 focus:ring-0 font-body text-base"
+                  />
+                </div>
+
+                <div className="relative border-b border-outline/50 focus-within:border-primary transition-colors py-3 md:py-2">
+                  <label htmlFor="contact-message" className="block font-label text-[10px] uppercase tracking-[0.2em] text-secondary mb-1">
+                    Motivo de la Consulta
+                  </label>
+                  <textarea
+                    id="contact-message"
+                    name="message"
+                    rows={3}
+                    required
+                    maxLength={2000}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="¿En qué podemos asesorarlo?"
+                    className="w-full bg-transparent border-none p-0 text-primary placeholder:text-outline/30 focus:ring-0 font-body text-base resize-none"
+                  />
+                </div>
+
+                {errorMsg && (
+                  <p role="alert" className="font-body text-sm text-red-600">{errorMsg}</p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={formState === 'submitting'}
+                  className="w-full bg-primary text-on-primary py-5 rounded-sm font-label uppercase tracking-[0.2em] text-xs font-bold hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl active:scale-[0.98] mt-4 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {formState === 'submitting' ? 'Enviando...' : 'Enviar Mensaje'}
+                </button>
+              </form>
+            )}
           </div>
 
           {/* Columna Derecha: Info de Contacto & Mapa */}
@@ -107,14 +205,15 @@ export default function Contact() {
 
             {/* Mapa Interactivo de Google Maps */}
             <div className="relative z-10 mt-12 md:mt-16 h-48 w-full bg-primary-container border border-white/10 rounded-sm overflow-hidden group shadow-inner">
-               <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d100000!2d-68.06!3d-38.95!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x960a323381e4b9e1%3A0xc4eb7ed1ec9c12b!2sNeuqu%C3%A9n!5e0!3m2!1sen!2sar!4v1690000000000!5m2!1sen!2sar" 
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 0 }} 
-                  allowFullScreen={false} 
-                  loading="lazy" 
-                  referrerPolicy="no-referrer-when-downgrade"
+               <iframe
+                  title="Ubicación de Neuquén Legal en Google Maps"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d100000!2d-68.06!3d-38.95!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x960a323381e4b9e1%3A0xc4eb7ed1ec9c12b!2sNeuqu%C3%A9n!5e0!3m2!1sen!2sar!4v1690000000000!5m2!1sen!2sar"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
                   className="w-full h-full grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 pointer-events-auto"
                ></iframe>
             </div>
