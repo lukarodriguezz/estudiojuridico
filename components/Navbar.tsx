@@ -32,40 +32,32 @@ export default function Navbar() {
 
   return (
     <>
-      <header 
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-          isScrolled ? 'bg-surface/95 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'
+      <header
+        className={`fixed top-0 left-0 w-full z-50 bg-primary transition-all duration-500 ${
+          isScrolled ? 'py-4 shadow-lg' : 'py-6'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-          
+
           {/* Logo */}
-          <a href="#" className={`font-headline text-2xl tracking-tight italic transition-colors duration-500 ${
-            isScrolled ? 'text-primary' : 'text-on-primary'
-          }`}>
-            Neuquén <span className="text-tertiary-fixed">Legal</span>
+          <a href="#" className="font-headline text-2xl tracking-tight italic text-on-primary">
+            Neuquén <span className="text-on-primary/70">Legal</span>
           </a>
 
           {/* Navegación Desktop */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a 
-                key={link.name} 
+              <a
+                key={link.name}
                 href={link.href}
-                className={`font-label text-[10px] uppercase tracking-[0.2em] font-bold transition-colors hover:text-tertiary-fixed ${
-                  isScrolled ? 'text-secondary' : 'text-on-primary/80'
-                }`}
+                className="font-label text-[10px] uppercase tracking-[0.2em] font-bold text-on-primary/70 hover:text-on-primary transition-colors"
               >
                 {link.name}
               </a>
             ))}
-            <a 
+            <a
               href="#contact"
-              className={`px-6 py-3 rounded-sm font-label uppercase tracking-[0.2em] text-[10px] font-bold transition-all shadow-lg hover:-translate-y-0.5 ${
-                isScrolled 
-                  ? 'bg-primary text-on-primary hover:bg-primary/90' 
-                  : 'bg-tertiary-fixed text-on-tertiary-fixed hover:bg-tertiary'
-              }`}
+              className="px-6 py-3 rounded-sm font-label uppercase tracking-[0.2em] text-[10px] font-bold bg-on-primary text-primary hover:bg-on-primary/90 transition-all shadow-lg hover:-translate-y-0.5"
             >
               Iniciar Consulta
             </a>
@@ -73,9 +65,7 @@ export default function Navbar() {
 
           {/* Botón Menú Mobile */}
           <button
-            className={`md:hidden p-2 transition-colors duration-500 ${
-              isScrolled ? 'text-primary' : 'text-on-primary'
-            }`}
+            className="md:hidden p-2 text-on-primary"
             onClick={() => setIsMobileMenuOpen(true)}
             aria-label="Abrir menú"
             aria-expanded={isMobileMenuOpen}
