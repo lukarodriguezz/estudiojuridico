@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[100svh] flex items-center overflow-hidden bg-primary pt-20 md:pt-0">
+    <section className="relative min-h-[100svh] flex items-center overflow-hidden bg-primary pt-24">
       {/* Imagen de fondo con filtro arquitectónico/legal */}
       <div className="absolute inset-0 z-0">
         <Image

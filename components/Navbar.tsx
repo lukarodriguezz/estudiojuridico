@@ -41,7 +41,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <a href="#" className="font-headline text-2xl tracking-tight italic text-on-primary">
-            Neuquén <span className="text-on-primary/70">Legal</span>
+            Neuquén <span className="text-tertiary-fixed">Legal</span>
           </a>
 
           {/* Navegación Desktop */}
