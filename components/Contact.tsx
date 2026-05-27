@@ -1,20 +1,16 @@
 'use client';
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail } from 'lucide-react';
 
-type FormState = 'idle' | 'submitting' | 'success' | 'error';
-
-const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID;
+const STUDIO_EMAIL = 'chambers@neuquenlegal.com.ar';
 
 export default function Contact() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const [formState, setFormState] = useState<FormState>('idle');
   const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!name.trim() || !email.trim() || !message.trim()) {
@@ -25,34 +21,15 @@ export default function Contact() {
       setErrorMsg('Ingrese un correo electrónico válido.');
       return;
     }
-    if (!FORMSPREE_ID) {
-      setErrorMsg('El formulario no está configurado. Contacte al administrador.');
-      return;
-    }
 
     setErrorMsg('');
-    setFormState('submitting');
 
-    try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ name, email, message }),
-      });
+    const subject = encodeURIComponent(`Consulta de ${name}`);
+    const body = encodeURIComponent(
+      `Nombre / Razón Social: ${name}\nCorreo: ${email}\n\nConsulta:\n${message}`
+    );
 
-      if (res.ok) {
-        setFormState('success');
-        setName('');
-        setEmail('');
-        setMessage('');
-      } else {
-        setFormState('error');
-        setErrorMsg('Error al enviar el mensaje. Intente nuevamente.');
-      }
-    } catch {
-      setFormState('error');
-      setErrorMsg('Error de red. Intente nuevamente.');
-    }
+    window.location.href = `mailto:${STUDIO_EMAIL}?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -69,23 +46,7 @@ export default function Contact() {
               Un socio del estudio analizará su consulta de manera confidencial y se pondrá en contacto a la mayor brevedad.
             </p>
 
-            {formState === 'success' ? (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="py-12 text-center"
-              >
-                <p className="font-headline text-2xl text-primary italic mb-3">Mensaje enviado.</p>
-                <p className="font-body text-secondary text-sm">Nos pondremos en contacto a la brevedad.</p>
-                <button
-                  onClick={() => setFormState('idle')}
-                  className="mt-8 font-label text-[10px] uppercase tracking-[0.2em] text-secondary hover:text-primary transition-colors"
-                >
-                  Enviar otro mensaje
-                </button>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} noValidate className="space-y-8 md:space-y-10">
+            <form onSubmit={handleSubmit} noValidate className="space-y-8 md:space-y-10">
                 <div className="relative border-b border-outline/50 focus-within:border-primary transition-colors py-3 md:py-2">
                   <label htmlFor="contact-name" className="block font-label text-[10px] uppercase tracking-[0.2em] text-secondary mb-1">
                     Nombre o Razón Social
@@ -143,13 +104,11 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  disabled={formState === 'submitting'}
-                  className="w-full bg-primary text-on-primary py-5 rounded-sm font-label uppercase tracking-[0.2em] text-xs font-bold hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl active:scale-[0.98] mt-4 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full bg-primary text-on-primary py-5 rounded-sm font-label uppercase tracking-[0.2em] text-xs font-bold hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl active:scale-[0.98] mt-4"
                 >
-                  {formState === 'submitting' ? 'Enviando...' : 'Enviar Mensaje'}
+                  Enviar Mensaje
                 </button>
-              </form>
-            )}
+            </form>
           </div>
 
           {/* Columna Derecha: Info de Contacto & Mapa */}
